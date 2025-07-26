@@ -1,6 +1,6 @@
 // This file contains functions for making API calls to the Google Apps Script backend.
 
-const API_BASE_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL'; // Replace with your Google Apps Script Web App URL
+const API_BASE_URL = 'https://script.google.com/macros/s/AKfycbx0VN6NMNGDqiHBpQwyk2sxlUZkfBEvYtawzoUae-ctpFpvGV1xAdUBrpHcMOS1NRg/exec'; // Replace with your Google Apps Script Web App URL
 
 async function fetchFromAPI(endpoint, method = 'GET', body = null) {
     const options = {
