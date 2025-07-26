@@ -1,0 +1,70 @@
+{
+  "app": {
+    "title": "Small Business PWA",
+    "description": "A mobile-first Progressive Web App for small business manufacturing and sales."
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "welcome": "Welcome, {{name}}!"
+  },
+  "dashboard": {
+    "totalSales": "Total Sales This Month",
+    "lowInventory": "Low Inventory Count",
+    "pendingCredits": "Pending Credit Sales",
+    "totalManufactured": "Total Products Manufactured",
+    "salesTrend": "Sales Trend"
+  },
+  "transactions": {
+    "recordTransaction": "Record Transaction",
+    "transactionDate": "Transaction Date",
+    "transactionType": "Transaction Type",
+    "product": "Product",
+    "amount": "Amount",
+    "filter": "Filter Transactions",
+    "view": "View Transactions"
+  },
+  "inventory": {
+    "manageInventory": "Manage Inventory",
+    "productName": "Product Name",
+    "stockLevel": "Stock Level",
+    "update": "Update Stock"
+  },
+  "production": {
+    "manageProduction": "Manage Production",
+    "selectRecipe": "Select Recipe",
+    "quantity": "Quantity",
+    "startProduction": "Start Production"
+  },
+  "recipes": {
+    "defineRecipe": "Define Recipe",
+    "ingredients": "Ingredients",
+    "addIngredient": "Add Ingredient",
+    "quantity": "Quantity"
+  },
+  "credits": {
+    "trackCredits": "Track Credit Sales",
+    "paymentStatus": "Payment Status",
+    "logCredit": "Log Credit Transaction"
+  },
+  "expenses": {
+    "logExpense": "Log Expense",
+    "expenseCategory": "Expense Category",
+    "amount": "Amount",
+    "description": "Description"
+  },
+  "settings": {
+    "accountSettings": "Account Settings",
+    "changePassword": "Change Password",
+    "language": "Language"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "loading": "Loading...",
+    "error": "An error occurred. Please try again."
+  }
+}

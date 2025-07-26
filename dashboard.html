@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/tailwind.css">
+    <script src="js/app.js" defer></script>
+    <script src="js/dashboard.js" defer></script>
+    <style>
+        body { background: linear-gradient(135deg, #e0e7ff 0%, #f3f4f6 100%); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-start bg-gray-100">
+    <header class="w-full bg-white shadow-md py-4 px-6 flex items-center justify-between">
+        <h1 class="text-2xl font-bold text-blue-700">Rockkit Dashboard</h1>
+        <nav>
+            <a href="index.html" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Logout</a>
+        </nav>
+    </header>
+    <main class="w-full max-w-2xl mx-auto p-4 flex-1">
+        <section class="bg-white rounded-lg shadow-md p-4 mb-6">
+            <h2 class="text-xl font-semibold mb-2 text-blue-600">Key Metrics</h2>
+            <div id="metrics" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-blue-100 p-4 rounded flex flex-col items-center">
+                    <h3 class="font-bold text-blue-700">Total Sales</h3>
+                    <p id="total-sales" class="text-lg font-semibold">$0.00</p>
+                </div>
+                <div class="bg-yellow-100 p-4 rounded flex flex-col items-center">
+                    <h3 class="font-bold text-yellow-700">Low Inventory</h3>
+                    <p id="low-inventory" class="text-lg font-semibold">0</p>
+                </div>
+                <div class="bg-green-100 p-4 rounded flex flex-col items-center">
+                    <h3 class="font-bold text-green-700">Pending Credit Sales</h3>
+                    <p id="pending-credits" class="text-lg font-semibold">0</p>
+                </div>
+                <div class="bg-red-100 p-4 rounded flex flex-col items-center">
+                    <h3 class="font-bold text-red-700">Products Manufactured</h3>
+                    <p id="total-manufactured" class="text-lg font-semibold">0</p>
+                </div>
+            </div>
+        </section>
+        <section class="bg-white rounded-lg shadow-md p-4">
+            <h2 class="text-xl font-semibold mb-2 text-blue-600">Sales Trend</h2>
+            <canvas id="salesTrendChart" class="w-full h-48"></canvas>
+        </section>
+    </main>
+    <footer class="w-full py-4 text-center text-xs text-gray-500 bg-white border-t mt-auto">&copy; 2025 Rockkit</footer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>

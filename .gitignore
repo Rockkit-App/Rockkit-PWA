@@ -1,0 +1,7 @@
+# Ignore Google Apps Script files and backend folder
+*.gs
+backend/
+*tailwindcss.exe
+*.exe
+*.exe.exe
+*build-tailwindcss

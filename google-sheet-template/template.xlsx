@@ -1,0 +1,26 @@
+The file google-sheet-template/template.xlsx is an Excel file and cannot be represented as text. However, I can provide a description of the structure and contents that should be included in the template. 
+
+Here’s a suggested structure for the Google Sheet template:
+
+1. **Users Sheet**
+   - Columns: `User ID`, `Name`, `Email`, `Role` (Admin/Staff)
+
+2. **Products Sheet**
+   - Columns: `Product ID`, `Product Name`, `Description`, `Unit Price`, `Stock Level`
+
+3. **Transactions Sheet**
+   - Columns: `Transaction ID`, `Date`, `Type` (Sale/Purchase), `Product ID`, `Quantity`, `Total Amount`
+
+4. **Recipes Sheet**
+   - Columns: `Recipe ID`, `Product ID`, `Ingredient`, `Quantity`
+
+5. **Inventory Sheet**
+   - Columns: `Product ID`, `Stock Level`, `Reorder Level`
+
+6. **Credits Sheet**
+   - Columns: `Credit ID`, `Customer Name`, `Amount`, `Due Date`, `Status`
+
+7. **Expenses Sheet**
+   - Columns: `Expense ID`, `Date`, `Description`, `Amount`, `Category`
+
+You can create this structure in an Excel file named `template.xlsx`. Each sheet should be named according to the categories above, and the first row of each sheet should contain the column headers as specified.

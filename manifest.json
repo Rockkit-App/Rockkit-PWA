@@ -1,0 +1,44 @@
+{
+  "name": "Rockkit",
+  "short_name": "Rockkit",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4a90e2",
+  "description": "A mobile-first Progressive Web App for small business manufacturing and sales.",
+  "icons": [
+    {
+      "src": "./icons/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "./icons/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "url": "./dashboard.html",
+      "icons": [{ "src": "./icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Transactions",
+      "url": "./transactions.html",
+      "icons": [{ "src": "./icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Inventory",
+      "url": "./inventory.html",
+      "icons": [{ "src": "./icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Production",
+      "url": "./production.html",
+      "icons": [{ "src": "./icons/icon-192x192.png", "sizes": "192x192" }]
+    }
+  ],
+  "offline_page": "./offline.html"
+}

@@ -1,0 +1,62 @@
+{
+  "app_title": "Application de gestion des petites entreprises",
+  "login": {
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "login_button": "Se connecter",
+    "forgot_password": "Mot de passe oublié ?"
+  },
+  "dashboard": {
+    "total_sales": "Ventes totales",
+    "low_inventory": "Inventaire faible",
+    "pending_credits": "Crédits en attente",
+    "total_products": "Total des produits fabriqués",
+    "sales_trend": "Tendance des ventes"
+  },
+  "transactions": {
+    "record_transaction": "Enregistrer une transaction",
+    "transaction_type": "Type de transaction",
+    "date": "Date",
+    "amount": "Montant",
+    "filter": "Filtrer",
+    "view_transactions": "Voir les transactions"
+  },
+  "production": {
+    "manage_production": "Gérer la production",
+    "select_recipe": "Sélectionner une recette",
+    "quantity": "Quantité",
+    "start_production": "Démarrer la production"
+  },
+  "recipes": {
+    "define_recipe": "Définir une recette",
+    "ingredients": "Ingrédients",
+    "add_ingredient": "Ajouter un ingrédient",
+    "save_recipe": "Enregistrer la recette"
+  },
+  "inventory": {
+    "manage_inventory": "Gérer l'inventaire",
+    "product": "Produit",
+    "stock_level": "Niveau de stock",
+    "update_stock": "Mettre à jour le stock"
+  },
+  "credits": {
+    "track_credits": "Suivre les crédits",
+    "credit_sales": "Ventes à crédit",
+    "payment_status": "État du paiement"
+  },
+  "expenses": {
+    "log_expense": "Enregistrer une dépense",
+    "category": "Catégorie",
+    "amount": "Montant",
+    "save_expense": "Enregistrer la dépense"
+  },
+  "settings": {
+    "account_settings": "Paramètres du compte",
+    "change_password": "Changer le mot de passe",
+    "language": "Langue"
+  },
+  "notifications": {
+    "low_stock_alert": "Alerte de stock faible",
+    "credit_due_reminder": "Rappel de crédit dû"
+  }
+}

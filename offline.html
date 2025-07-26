@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - SmallBiz PWA</title>
+    <link rel="stylesheet" href="/css/tailwind.css">
+    <style>
+        body { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: #f3f4f6; }
+        .offline-icon { font-size: 4rem; color: #d97706; }
+    </style>
+</head>
+<body>
+    <div class="offline-icon">&#9888;</div>
+    <h1 class="text-2xl font-bold mt-4">You are offline</h1>
+    <p class="mt-2 text-gray-700">It looks like you lost your internet connection.<br>
+    You can continue to use the app, but some features may be unavailable until you reconnect.</p>
+    <button onclick="location.reload()" class="mt-6 px-4 py-2 bg-yellow-500 text-white rounded">Try Again</button>
+</body>
+</html>

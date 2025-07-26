@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipes Management</title>
+    <link rel="stylesheet" href="css/tailwind.css">
+    <script src="js/app.js" defer></script>
+    <script src="js/recipes.js" defer></script>
+    <style>
+        body { background: linear-gradient(135deg, #e0e7ff 0%, #f3f4f6 100%); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-start bg-gray-100">
+    <header class="w-full bg-white shadow-md py-4 px-6 flex items-center justify-between">
+        <h1 class="text-2xl font-bold text-blue-700">Rockkit Recipes</h1>
+        <button onclick="location.href='dashboard.html'" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Dashboard</button>
+    </header>
+    <main class="w-full max-w-md mx-auto p-4 flex-1">
+        <section id="recipe-form-section" class="bg-white rounded-lg shadow-md p-4 mb-6">
+            <h2 class="text-xl font-semibold mb-2 text-blue-600">Add New Recipe</h2>
+            <form id="add-recipe-form" class="space-y-3">
+                <div>
+                    <label for="recipe-id" class="block text-sm font-medium text-gray-700">Recipe ID</label>
+                    <input type="text" id="recipe-id" class="border rounded p-2 w-full" required>
+                </div>
+                <div>
+                    <label for="product-id" class="block text-sm font-medium text-gray-700">Product ID</label>
+                    <input type="text" id="product-id" class="border rounded p-2 w-full" required>
+                </div>
+                <div>
+                    <label for="ingredient" class="block text-sm font-medium text-gray-700">Ingredient</label>
+                    <input type="text" id="ingredient" class="border rounded p-2 w-full" required>
+                </div>
+                <div>
+                    <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
+                    <input type="number" id="quantity" class="border rounded p-2 w-full" required min="1">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">Add Recipe</button>
+            </form>
+        </section>
+        <section id="recipe-list-section" class="bg-white rounded-lg shadow-md p-4">
+            <h2 class="text-xl font-semibold mb-2 text-blue-600">Existing Recipes</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                    <thead class="bg-blue-50">
+                        <tr>
+                            <th class="border px-2 py-2 text-xs text-blue-700">Recipe ID</th>
+                            <th class="border px-2 py-2 text-xs text-blue-700">Product ID</th>
+                            <th class="border px-2 py-2 text-xs text-blue-700">Ingredient</th>
+                            <th class="border px-2 py-2 text-xs text-blue-700">Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recipes-body">
+                        <!-- Recipes will be dynamically inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <footer class="w-full py-4 text-center text-xs text-gray-500 bg-white border-t mt-auto">&copy; 2025 Rockkit</footer>
+</body>
+</html>

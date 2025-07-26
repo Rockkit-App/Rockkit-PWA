@@ -1,0 +1,24 @@
+{
+  "name": "smallbiz-pwa",
+  "version": "1.0.0",
+  "description": "Rockkit is a modern, installable Progressive Web App (PWA) for small business management. It supports multiple tenants (companies), each with their own Google Sheet for business data, and a central admin sheet for subscription management. The backend is powered by Google Apps Script, and the frontend is a mobile-first PWA using HTML, Tailwind CSS, and JavaScript.",
+  "main": ".env.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rockkit-App/Rockkit-PWA.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Rockkit-App/Rockkit-PWA/issues"
+  },
+  "homepage": "https://github.com/Rockkit-App/Rockkit-PWA#readme"
+}
