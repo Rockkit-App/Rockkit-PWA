@@ -3,47 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="src/css/tailwind.css" rel="stylesheet">
-    <link rel="manifest" href="manifest.json">
     <title>Small Business PWA</title>
     <meta name="theme-color" content="#4a90e2">
+
+    <!-- Tailwind CSS -->
+    <link href="/src/css/tailwind.css" rel="stylesheet">
+
+    <!-- Manifest and Icons -->
+    <link rel="manifest" href="/manifest.json">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
 </head>
 <body class="bg-gray-100 flex items-center justify-center h-screen">
+
+    <!-- Offline Banner -->
+    <div id="offline-banner" class="hidden fixed top-0 w-full bg-yellow-300 text-center py-2 text-sm text-black z-50">
+        You are offline. Some features may be unavailable.
+    </div>
+
+    <!-- Login Box -->
     <div class="bg-white p-8 rounded-lg shadow-md w-96">
         <h1 class="text-2xl font-bold text-center mb-4">Welcome to Small Business PWA</h1>
         <form id="login-form">
             <div class="mb-4">
                 <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                <input type="email" id="email" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500" placeholder="you@example.com">
+                <input type="email" id="email" aria-label="Email address" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500" placeholder="you@example.com">
             </div>
             <div class="mb-4">
                 <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                <input type="password" id="password" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500" placeholder="********">
+                <input type="password" id="password" aria-label="Password" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500" placeholder="********">
             </div>
             <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">Login</button>
         </form>
-        <p class="mt-4 text-center text-sm text-gray-600">Don't have an account? <a href="#" class="text-blue-600 hover:underline">Sign up</a></p>
+        <p class="mt-4 text-center text-sm text-gray-600">
+            Don't have an account? <a href="#" class="text-blue-600 hover:underline">Sign up</a>
+        </p>
     </div>
-    <script src="src/js/app.js"></script>
+
+    <!-- Scripts -->
+    <script src="/src/js/app.js"></script>
     <script>
-        // Register service worker for offline capability
+        // Register service worker
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/service-worker.js').then(function (registration) {
                     console.log('ServiceWorker registration successful:', registration.scope);
-                }, function(err) {
-                    console.log('ServiceWorker registration failed:', err);
+                }).catch(function (err) {
+                    console.error('ServiceWorker registration failed:', err);
                 });
             });
         }
-        // Show offline status
-        window.addEventListener('offline', function() {
-            alert('You are offline. Some features may be unavailable.');
-        });
+
+        // Show/hide offline banner
+        const offlineBanner = document.getElementById('offline-banner');
+        window.addEventListener('offline', () => offlineBanner.classList.remove('hidden'));
+        window.addEventListener('online', () => offlineBanner.classList.add('hidden'));
     </script>
 </body>
 </html>
