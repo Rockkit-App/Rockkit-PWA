@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="manifest" href="manifest.json">
-    <title>Small Business PWA</title>
-    <meta name="theme-color" content="#4a90e2">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Small Business PWA</title>
-    <meta name="theme-color" content="#4a90e2" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Small Business PWA</title>
 
- 
-  </head>
+  <!-- Tailwind CSS via CDN (for development only) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- PWA manifest & theme -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#4a90e2" />
+
+  <!-- Apple touch icon and PWA support for iOS -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+  <!-- Favicon fallback -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+</head>
 <body class="bg-gray-100 flex items-center justify-center h-screen">
 
   <!-- Offline banner -->
@@ -46,25 +51,47 @@
     </p>
   </div>
 
-  <!-- JS and Service Worker -->
-  <script src="src/js/app.js"></script>
+  <!-- App Script & Service Worker -->
   <script>
     // Register service worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(function (registration) {
-            console.log('ServiceWorker registration successful:', registration.scope);
-          }, function (err) {
-            console.log('ServiceWorker registration failed:', err);
-          });
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(reg => console.log('ServiceWorker registered:', reg.scope))
+          .catch(err => console.log('ServiceWorker registration failed:', err));
       });
     }
 
-    // Show/hide offline banner
+    // Offline banner toggle
     const offlineBanner = document.getElementById('offline-banner');
     window.addEventListener('offline', () => offlineBanner.classList.remove('hidden'));
     window.addEventListener('online', () => offlineBanner.classList.add('hidden'));
+
+    // Login form handler (demo - replace with real backend call)
+    document.getElementById('login-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      // Replace with your backend endpoint
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+
+        if (res.ok) {
+          alert('Login successful');
+          // Redirect or load app
+        } else {
+          alert('Invalid credentials');
+        }
+      } catch (err) {
+        console.error('Login error:', err);
+        alert('Server error');
+      }
+    });
   </script>
 </body>
 </html>

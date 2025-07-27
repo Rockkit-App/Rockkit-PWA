@@ -1,11 +1,13 @@
 {
   "name": "Rockkit",
   "short_name": "Rockkit",
-  "start_url": "./index.html",
+  "description": "A mobile-first Progressive Web App for small business manufacturing and sales.",
+  "start_url": "/Rockkit-PWA/index.html",
+  "scope": "/Rockkit-PWA/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#4a90e2",
-  "description": "A mobile-first Progressive Web App for small business manufacturing and sales.",
   "icons": [
     {
       "src": "./icons/icon-192x192.png",
@@ -39,6 +41,5 @@
       "url": "./production.html",
       "icons": [{ "src": "./icons/icon-192x192.png", "sizes": "192x192" }]
     }
-  ],
-  "offline_page": "./offline.html"
+  ]
 }
