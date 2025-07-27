@@ -5,48 +5,58 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initializeApp() {
-    // Check if the user is authenticated
     checkAuthentication();
-
-    // Set up routing based on the current URL
     setupRouting();
+
+    // Listen for hash changes to support navigation
+    window.addEventListener('hashchange', setupRouting);
 }
 
 function checkAuthentication() {
-    // Logic to check if the user is authenticated
-    // Redirect to login if not authenticated
+    const token = localStorage.getItem('authToken');
+    const currentRoute = getCurrentRoute();
+
+    const publicRoutes = ['/', '/login'];
+
+    if (!token && !publicRoutes.includes(currentRoute)) {
+        window.location.hash = '#/login';
+    }
+
+    if (token && publicRoutes.includes(currentRoute)) {
+        window.location.hash = '#/dashboard';
+    }
 }
 
 function setupRouting() {
-    const path = window.location.pathname;
+    const route = getCurrentRoute();
 
-    switch (path) {
+    switch (route) {
         case '/':
-        case '/index.html':
+        case '/login':
             loadLoginPage();
             break;
-        case '/dashboard.html':
+        case '/dashboard':
             loadDashboard();
             break;
-        case '/transactions.html':
+        case '/transactions':
             loadTransactions();
             break;
-        case '/production.html':
+        case '/production':
             loadProduction();
             break;
-        case '/recipes.html':
+        case '/recipes':
             loadRecipes();
             break;
-        case '/inventory.html':
+        case '/inventory':
             loadInventory();
             break;
-        case '/credits.html':
+        case '/credits':
             loadCredits();
             break;
-        case '/expenses.html':
+        case '/expenses':
             loadExpenses();
             break;
-        case '/settings.html':
+        case '/settings':
             loadSettings();
             break;
         default:
@@ -55,42 +65,60 @@ function setupRouting() {
     }
 }
 
+function getCurrentRoute() {
+    const hash = window.location.hash || '#/';
+    return hash.replace('#', '');
+}
+
+// ------------------------
+// Page Load Functions
+// ------------------------
+
 function loadLoginPage() {
-    // Logic to load the login page
+    console.log("Login Page Loaded");
+    // Optional: fetch or setup login page content
 }
 
 function loadDashboard() {
-    // Logic to load the dashboard
+    console.log("Dashboard Loaded");
 }
 
 function loadTransactions() {
-    // Logic to load the transactions page
+    console.log("Transactions Page Loaded");
 }
 
 function loadProduction() {
-    // Logic to load the production page
+    console.log("Production Page Loaded");
 }
 
 function loadRecipes() {
-    // Logic to load the recipes page
+    console.log("Recipes Page Loaded");
 }
 
 function loadInventory() {
-    // Logic to load the inventory page
+    console.log("Inventory Page Loaded");
 }
 
 function loadCredits() {
-    // Logic to load the credits page
+    console.log("Credits Page Loaded");
 }
 
 function loadExpenses() {
-    // Logic to load the expenses page
+    console.log("Expenses Page Loaded");
 }
 
 function loadSettings() {
-    // Logic to load the settings page
+    console.log("Settings Page Loaded");
 }
 
 function load404Page() {
-    // Logic to load a 404 not found page
+    document.body.innerHTML = `
+        <div class="flex items-center justify-center h-screen bg-gray-100">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold mb-2">404</h1>
+                <p class="text-lg mb-4">Page not found</p>
+                <a href="#/login" class="text-blue-600 hover:underline">Go to Login</a>
+            </div>
+        </div>
+    `;
 }
