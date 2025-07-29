@@ -2,54 +2,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Rockkit Admin - Subscriptions</title>
   <link rel="stylesheet" href="css/tailwind.css">
+  <script src="https://apis.google.com/js/api.js" async defer></script>
+  <script type="module">
+    import { isSignedIn, handleSignoutClick } from './js/auth.js';
+    import Settings from './js/settings.js';
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (!isSignedIn()) {
+        alert('You must be signed in to access this page.');
+        window.location.href = 'index.html';
+        return;
+      }
+
+      // Show user info (optional)
+      const user = JSON.parse(localStorage.getItem('userProfile'));
+      const userInfo = document.getElementById('user-info');
+      if (user && userInfo) {
+        userInfo.innerHTML = `
+          <div class="flex items-center gap-2">
+            <img src="${user.imageUrl}" alt="${user.name}" class="w-8 h-8 rounded-full"/>
+            <span class="text-sm">${user.name}</span>
+            <button id="logoutBtn" class="ml-4 text-blue-600 underline text-sm">Logout</button>
+          </div>
+        `;
+        document.getElementById('logoutBtn').onclick = handleSignoutClick;
+      }
+    });
+  </script>
 </head>
 <body class="bg-gray-100 min-h-screen">
+  <!-- Header -->
+  <div class="flex justify-between items-center bg-white shadow p-4">
+    <h1 class="text-xl font-bold">Tenant Subscriptions</h1>
+    <div id="user-info"></div>
+  </div>
+
+  <!-- Main content -->
   <div class="max-w-2xl mx-auto py-8">
-    <h1 class="text-2xl font-bold mb-6 text-center">Tenant Subscriptions</h1>
-    <div id="subscription-status" class="mb-4"></div>
+    <div id="subscription-status" class="mb-4 text-center text-sm text-gray-700"></div>
+
     <table class="min-w-full bg-white rounded shadow">
       <thead>
         <tr>
-          <th class="px-4 py-2">Company</th>
-          <th class="px-4 py-2">Status</th>
-          <th class="px-4 py-2">Plan</th>
-          <th class="px-4 py-2">End Date</th>
-          <th class="px-4 py-2">Actions</th>
+          <th class="px-4 py-2 text-left">Company</th>
+          <th class="px-4 py-2 text-left">Status</th>
+          <th class="px-4 py-2 text-left">Plan</th>
+          <th class="px-4 py-2 text-left">End Date</th>
+          <th class="px-4 py-2 text-left">Actions</th>
         </tr>
       </thead>
       <tbody id="tenants-table"></tbody>
     </table>
+
+    <!-- Add subscription form -->
     <div class="mt-8">
       <h2 class="text-lg font-semibold mb-2">Add Subscription Payment</h2>
       <form id="payment-form" class="bg-white p-4 rounded shadow">
         <div class="mb-2">
           <label class="block text-sm">Company ID</label>
-          <input type="text" id="companyId" class="w-full border rounded px-2 py-1" required>
+          <input type="text" id="companyId" class="w-full border rounded px-2 py-1" required />
         </div>
         <div class="mb-2">
           <label class="block text-sm">Amount</label>
-          <input type="number" id="amount" class="w-full border rounded px-2 py-1" required>
+          <input type="number" id="amount" class="w-full border rounded px-2 py-1" required />
         </div>
         <div class="mb-2">
           <label class="block text-sm">Payment Method</label>
-          <input type="text" id="method" class="w-full border rounded px-2 py-1" required>
+          <input type="text" id="method" class="w-full border rounded px-2 py-1" required />
         </div>
         <div class="mb-2">
           <label class="block text-sm">Transaction Ref</label>
-          <input type="text" id="transactionRef" class="w-full border rounded px-2 py-1">
+          <input type="text" id="transactionRef" class="w-full border rounded px-2 py-1" />
         </div>
         <div class="mb-2">
           <label class="block text-sm">End Date</label>
-          <input type="date" id="endDate" class="w-full border rounded px-2 py-1" required>
+          <input type="date" id="endDate" class="w-full border rounded px-2 py-1" required />
         </div>
         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Add Payment</button>
       </form>
     </div>
   </div>
-  <script src="js/admin-subscriptions.js"></script>
+
+  <!-- Scripts -->
+  <script type="module" src="js/admin-subscriptions.js"></script>
 </body>
 </html>

@@ -1,36 +1,88 @@
-// This file handles user settings and preferences.
+// src/js/settings.js
 
-document.addEventListener('DOMContentLoaded', () => {
-    const settingsForm = document.getElementById('settings-form');
-    const languageSelect = document.getElementById('language-select');
-    const notificationToggle = document.getElementById('notification-toggle');
+// ✅ Safe-to-expose environment variable
+import { GOOGLE_APPS_SCRIPT_WEB_APP_URL } from '../env.js';
 
-    // Load saved settings
-    loadSettings();
+/**
+ * Centralized app settings manager
+ */
+const Settings = {
+  /**
+   * Get base URL (from env or override)
+   */
+  getApiBaseUrl() {
+    return GOOGLE_APPS_SCRIPT_WEB_APP_URL;
+  },
 
-    // Event listener for form submission
-    settingsForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        saveSettings();
+  /**
+   * Get current user's auth token
+   */
+  getAuthToken() {
+    return localStorage.getItem('authToken') || '';
+  },
+
+  /**
+   * Get current companyId (for multi-tenant logic)
+   */
+  getCompanyId() {
+    return localStorage.getItem('companyId') || '';
+  },
+
+  /**
+   * Save session info (token, userId, companyId)
+   */
+  saveSession({ token, userId, companyId }) {
+    localStorage.setItem('authToken', token);
+    localStorage.setItem('userId', userId);
+    localStorage.setItem('companyId', companyId);
+  },
+
+  /**
+   * Clear saved session data
+   */
+  clearSession() {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('companyId');
+  },
+
+  /**
+   * Check if user is logged in
+   */
+  isLoggedIn() {
+    return !!this.getAuthToken() && !!this.getCompanyId();
+  },
+
+  /**
+   * Optional: Load app config from Google Sheets backend
+   */
+  async loadAppConfig() {
+    const res = await fetch(`${this.getApiBaseUrl()}?action=getConfig`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${this.getAuthToken()}`,
+        'X-Company-ID': this.getCompanyId(),
+      }
     });
 
-    // Function to load settings from localStorage
-    function loadSettings() {
-        const language = localStorage.getItem('language') || 'en';
-        const notificationsEnabled = localStorage.getItem('notifications') === 'true';
+    if (!res.ok) throw new Error('Unable to fetch config');
+    const config = await res.json();
 
-        languageSelect.value = language;
-        notificationToggle.checked = notificationsEnabled;
-    }
+    // Optionally cache or use it
+    localStorage.setItem('appConfig', JSON.stringify(config));
+    return config;
+  },
 
-    // Function to save settings to localStorage
-    function saveSettings() {
-        const selectedLanguage = languageSelect.value;
-        const notificationsEnabled = notificationToggle.checked;
+  /**
+   * Read cached config (if available)
+   */
+  getCachedConfig() {
+    const raw = localStorage.getItem('appConfig');
+    return raw ? JSON.parse(raw) : null;
+  },
+};
 
-        localStorage.setItem('language', selectedLanguage);
-        localStorage.setItem('notifications', notificationsEnabled);
+// Make available globally if needed
+window.AppSettings = Settings;
 
-        alert('Settings saved successfully!');
-    }
-});
+export default Settings;

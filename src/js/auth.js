@@ -1,88 +1,120 @@
-// frontend/src/js/auth.js
+// src/js/auth.js
 
-const CLIENT_ID = 'YOUR_CLIENT_ID.apps.googleusercontent.com'; // Replace with your actual OAuth 2.0 Client ID
-const REDIRECT_URI = window.location.origin; // Optional, typically not needed for installed/PWA apps
+import Settings from './settings.js';
+
+const CLIENT_ID = 'YOUR_CLIENT_ID.apps.googleusercontent.com'; // 🔁 Replace this with your actual Google OAuth Client ID
 const SCOPES = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile';
 
 /**
- * Initiates Google Sign-In.
- */
-function handleAuthClick() {
-    gapi.auth2.getAuthInstance().signIn()
-        .then(() => {
-            console.log('User signed in');
-            loadUserProfile();
-        })
-        .catch(error => {
-            console.error('Error signing in:', error);
-        });
-}
-
-/**
- * Signs out the currently signed-in user.
- */
-function handleSignoutClick() {
-    gapi.auth2.getAuthInstance().signOut()
-        .then(() => {
-            console.log('User signed out');
-            localStorage.removeItem('userProfile');
-            localStorage.removeItem('authToken');
-        });
-}
-
-/**
- * Loads the user's profile from Google and stores it locally.
- */
-function loadUserProfile() {
-    gapi.client.request({
-        path: 'https://www.googleapis.com/userinfo/v2/me'
-    })
-    .then(response => {
-        const user = response.result;
-        console.log('User profile:', user);
-
-        // Store user profile in localStorage or use for UI rendering
-        localStorage.setItem('userProfile', JSON.stringify(user));
-
-        // Save token for use in API calls
-        const token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
-        localStorage.setItem('authToken', token);
-    })
-    .catch(error => {
-        console.error('Error loading user profile:', error);
-    });
-}
-
-/**
- * Initializes the Google API client.
+ * Initialize the Google Auth client
  */
 function initClient() {
-    gapi.load('client:auth2', () => {
-        gapi.auth2.init({
-            client_id: CLIENT_ID,
-            scope: SCOPES
-        })
-        .then(() => {
-            console.log('GAPI client initialized');
-            if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
-                loadUserProfile();
-            }
-        })
-        .catch(error => {
-            console.error('Error initializing GAPI client:', error);
-        });
+  gapi.load('client:auth2', async () => {
+    try {
+      await gapi.auth2.init({ client_id: CLIENT_ID, scope: SCOPES });
+      console.log('✅ GAPI client initialized');
+
+      const authInstance = gapi.auth2.getAuthInstance();
+
+      if (authInstance.isSignedIn.get()) {
+        const googleUser = authInstance.currentUser.get();
+        handlePostLogin(googleUser);
+      }
+    } catch (err) {
+      console.error('❌ Failed to initialize GAPI client:', err);
+    }
+  });
+}
+
+/**
+ * Sign in with Google
+ */
+function handleAuthClick() {
+  gapi.auth2.getAuthInstance().signIn()
+    .then(user => handlePostLogin(user))
+    .catch(err => console.error('❌ Sign-in failed:', err));
+}
+
+/**
+ * Sign out and clear local session
+ */
+function handleSignoutClick() {
+  gapi.auth2.getAuthInstance().signOut()
+    .then(() => {
+      Settings.clearSession();
+      localStorage.removeItem('userProfile');
+      console.log('👋 Signed out and session cleared');
+      location.reload();
     });
 }
 
 /**
- * Retrieves the OAuth token stored locally.
- * @returns {Promise<string>} - Access token or throws error if not available.
+ * Handle post-login actions: save token + session info
  */
-async function getAuthToken() {
-    const token = localStorage.getItem('authToken');
-    if (!token) throw new Error('No auth token found');
-    return token;
+async function handlePostLogin(googleUser) {
+  const profile = googleUser.getBasicProfile();
+  const authResponse = googleUser.getAuthResponse();
+
+  const user = {
+    id: profile.getId(),
+    name: profile.getName(),
+    email: profile.getEmail(),
+    imageUrl: profile.getImageUrl(),
+    token: authResponse.access_token
+  };
+
+  // Save user info
+  localStorage.setItem('userProfile', JSON.stringify(user));
+
+  // Attempt to resolve companyId
+  const companyId = await resolveCompanyId(user.email);
+
+  // Save session using Settings helper
+  Settings.saveSession({
+    token: user.token,
+    userId: user.id,
+    companyId
+  });
+
+  console.log('✅ User logged in:', user.name);
+
+  // Optional: navigate to main app or reload page
+  location.reload();
 }
 
-// Automatically initialize on page load
-window.onload = initClient;
+/**
+ * Infer company ID from email domain
+ * You can replace this with an API call if needed
+ */
+function resolveCompanyId(email) {
+  const domain = email.split('@')[1].split('.')[0];
+  return domain.toLowerCase();
+}
+
+/**
+ * Get auth token (helper)
+ */
+function getAuthToken() {
+  const token = Settings.getAuthToken();
+  if (!token) throw new Error('Not authenticated');
+  return token;
+}
+
+/**
+ * Check login status
+ */
+function isSignedIn() {
+  return Settings.isLoggedIn();
+}
+
+// Auto-init Google Auth when script loads
+window.addEventListener('load', initClient);
+
+// Export methods
+export {
+  initClient,
+  handleAuthClick,
+  handleSignoutClick,
+  getAuthToken,
+  isSignedIn
+};

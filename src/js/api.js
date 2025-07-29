@@ -1,83 +1,73 @@
-// api.js
-// Centralized API client for communicating with the Google Apps Script backend.
+// src/js/api.js
 
-const API_BASE_URL = 'https://script.google.com/macros/s/AKfycbx0VN6NMNGDqiHBpQwyk2sxlUZkfBEvYtawzoUae-ctpFpvGV1xAdUBrpHcMOS1NRg/exec'; // Replace with your actual deployed Web App URL
+const BASE_URL = 'https://script.google.com/macros/s/AKfycbx0VN6NMNGDqiHBpQwyk.../exec'; // 🔁 Update with your full GAS Web App URL
 
 /**
- * Generic API request handler.
- * @param {string} endpoint - The API endpoint to call.
- * @param {string} method - HTTP method (GET, POST).
- * @param {Object|null} body - Request payload for POST requests.
- * @returns {Promise<Object>} - Parsed JSON response.
+ * Returns stored auth token and company ID.
  */
-async function fetchFromAPI(endpoint, method = 'GET', body = null) {
-    const token = await getAuthToken(); // Implement this to get Google OAuth token
+function getAuthHeaders() {
+  const token = localStorage.getItem('authToken');
+  const companyId = localStorage.getItem('companyId');
 
-    const options = {
-        method,
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        }
-    };
+  if (!token || !companyId) {
+    throw new Error('Missing auth or company ID');
+  }
 
-    if (body) {
-        options.body = JSON.stringify(body);
+  return {
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json',
+    'X-Company-ID': companyId, // Optional header if your GAS reads this
+  };
+}
+
+/**
+ * Generic API POST call to backend Apps Script.
+ */
+async function callApi(action, payload = {}) {
+  const body = {
+    action,
+    ...payload,
+  };
+
+  const res = await fetch(BASE_URL, {
+    method: 'POST',
+    headers: getAuthHeaders(),
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    if (res.status === 401) {
+      alert('Session expired. Please log in again.');
+      localStorage.clear();
+      window.location.href = '/Rockkit-PWA/index.html';
     }
+    throw new Error(`API error: ${res.statusText}`);
+  }
 
-    const response = await fetch(`${API_BASE_URL}/${endpoint}`, options);
+  const data = await res.json();
+  if (data.error) throw new Error(data.error);
 
-    if (!response.ok) {
-        throw new Error(`API Error: ${response.status} ${response.statusText}`);
-    }
-
-    return await response.json();
+  return data;
 }
 
-// Dashboard
-async function getDashboard() {
-    return fetchFromAPI('getDashboard');
-}
-
-// Transactions
-async function getTransactions() {
-    return fetchFromAPI('getTransactions');
-}
-
-async function addTransaction(transaction) {
-    return fetchFromAPI('addTransaction', 'POST', transaction);
-}
-
-// Recipes
-async function getRecipes() {
-    return fetchFromAPI('getRecipes');
-}
-
-async function addRecipe(recipe) {
-    return fetchFromAPI('addRecipe', 'POST', recipe);
-}
-
-// Inventory
+/**
+ * Example API calls for your modules
+ */
 async function getInventory() {
-    return fetchFromAPI('getInventory');
+  return await callApi('getInventory');
 }
 
-// Production
-async function addProduction(production) {
-    return fetchFromAPI('addProduction', 'POST', production);
+async function saveTransaction(transaction) {
+  return await callApi('saveTransaction', { transaction });
 }
 
-// Credits
-async function getCredits() {
-    return fetchFromAPI('getCredits');
+async function getCompanyConfig() {
+  return await callApi('getConfig');
 }
 
-// Expenses
-async function getExpenses() {
-    return fetchFromAPI('getExpenses');
-}
-
-// Auth
-async function validateToken() {
-    return fetchFromAPI('validateToken');
-}
+// Export to window if needed globally
+window.RockkitAPI = {
+  getInventory,
+  saveTransaction,
+  getCompanyConfig,
+};

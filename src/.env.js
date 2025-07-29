@@ -1,4 +1,4 @@
-// src/js/env.js
+// src/env.js
 
 // ✅ Environment configuration for frontend usage
 // ⚠️ Do NOT include secrets or private API keys here in public repos

@@ -1,4 +1,4 @@
-// src/js/env.sample.js
+// src/env.sample.js
 
 // 🌐 Sample environment configuration for the frontend
 // ⚠️ Do NOT include secrets or actual credentials in public repositories
