@@ -5,4 +5,5 @@ backend/
 *.exe
 *.exe.exe
 *build-tailwindcss
-.early.coverage
+*.early.coverage
+*client_secret_967200877297-47fl0ru4hucdbpasa1p7vr174b4mjp1b.apps.googleusercontent.com.JSON

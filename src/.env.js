@@ -9,7 +9,7 @@ const GOOGLE_APPS_SCRIPT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfyc
 
 // ✅ Google OAuth Client ID
 // Safe to expose — required for frontend authentication via Google Sign-In
-const GOOGLE_CLIENT_ID = '967200877297-47fl0ru4hucdbpasa1p7vr174b4mjp1b.apps.googleusercontent.com.apps.googleusercontent.com'; // ⛔ Replace with your actual OAuth client ID
+const GOOGLE_CLIENT_ID = '967200877297-47fl0ru4hucdbpasa1p7vr174b4mjp1b.apps.googleusercontent.com'; // ⛔ Replace with your actual OAuth client ID
 
 // ✅ Optional: Central Admin Sheet ID for multi-tenant config lookup
 // Only safe if the backend uses this ID and enforces access rules
